@@ -1,0 +1,37 @@
+name: Test
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    name: 'Test pbs-asdf plugin'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+
+    strategy:
+      matrix:
+        tool: ["gorson", "redyl"]
+
+    steps:
+      - name: Setup asdf
+        uses: asdf-vm/actions/setup@v1
+
+      - name: Install the plugin
+        run: asdf plugin add ${{ matrix.tool }} https://github.com/pbs/asdf-pbs.git
+
+      - name: List all versions of tool
+        run: asdf list-all ${{ matrix.tool }}
+
+      - name: Install latest version of the tool
+        run: |
+          versions=($(asdf list-all ${{ matrix.tool }}))
+          asdf install ${{ matrix.tool }} ${versions[-1]}
+
+      - name: Validate that the tool works
+        run: ${{ matrix.tool }} version
