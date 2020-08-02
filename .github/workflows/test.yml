@@ -31,6 +31,7 @@ jobs:
       - name: Install latest version of the tool
         run: |
           versions=($(asdf list-all ${{ matrix.tool }}))
+          echo "${{ matrix.tool }} ${versions[-1]}" > .tool-versions
           asdf install ${{ matrix.tool }} ${versions[-1]}
 
       - name: Validate that the tool works
