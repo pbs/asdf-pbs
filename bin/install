@@ -49,7 +49,8 @@ get_arch () {
 get_filename () {
   local -r version="$1"
   local -r platform="$(get_arch)"
-  echo "${toolname}-${version}-${platform}-amd64"
+  # The /v is necessary here as a hack for redyl
+  echo "${toolname}-${version/v}-${platform}-amd64"
 }
 
 get_download_url () {
