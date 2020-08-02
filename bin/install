@@ -35,6 +35,7 @@ install () {
 
     echo "Installing tool"
     mv "${download_path}" "${bin_install_path}"
+    chmod +x "${bin_install_path}"
   else
     echo "Error: ${toolname} version ${version} not found" >&2
     exit 1
