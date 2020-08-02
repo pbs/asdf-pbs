@@ -17,4 +17,4 @@ asdf plugin-add gorson|redyl https://github.com/pbs/asdf-pbs.git
 Check out the [asdf](https://github.com/asdf-vm/asdf) readme for instructions on how to install and manage versions of PBS tools.
 
 [asdf-hashicorp]: https://github.com/Banno/asdf-hashicorp
-[gha-badge]: https://github.com/pbs/asdf-pbs/workflows/workflows/test.yml/badge.svg
+[gha-badge]: https://github.com/pbs/asdf-pbs/workflows/Test/badge.svg
