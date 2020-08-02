@@ -12,11 +12,11 @@ list_all () {
   local versions=""
   local version
 
-  for version in $(curl -s "https://api.github.com/repos/pbs/${toolname}/releases/" \
+  for version in $(curl -s "https://api.github.com/repos/pbs/${toolname}/releases" \
     | grep '"tag_name": "' | sed -E 's/.*"([^"]+)".*/\1/'); do
 
     if [[ -z "${versions}" ]]; then
-        versions="${versions}"
+        versions="${version}"
     else
         versions="${version} ${versions}"
     fi
