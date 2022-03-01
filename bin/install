@@ -42,15 +42,34 @@ install () {
   fi
 }
 
-get_arch () {
+get_platform () {
   uname | tr '[:upper:]' '[:lower:]'
+}
+
+get_arch () {
+  uname_m_output="$(uname -m | tr '[:upper:]' '[:lower:]')"
+  case "${uname_m_output}" in
+    arm64)
+      echo "arm64"
+      ;;
+    amd64)
+      echo "amd64"
+      ;;
+    x86_64)
+      echo "amd64"
+      ;;
+    *)
+      echo "amd64"
+      ;;
+  esac
 }
 
 get_filename () {
   local -r version="$1"
-  local -r platform="$(get_arch)"
+  local -r platform="$(get_platform)"
+  local -r architecture="$(get_arch)"
   # The /v is necessary here as a hack for redyl
-  echo "${toolname}-${version/v}-${platform}-amd64"
+  echo "${toolname}-${version/v}-${platform}-${architecture}"
 }
 
 get_download_url () {
