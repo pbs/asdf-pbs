@@ -23,7 +23,9 @@ jobs:
         uses: asdf-vm/actions/setup@v1
 
       - name: Install the plugin
-        run: asdf plugin add ${{ matrix.tool }} https://github.com/pbs/asdf-pbs.git "${{ github.head_ref }}"
+        run: |
+          asdf plugin add ${{ matrix.tool }} https://github.com/pbs/asdf-pbs.git 
+          asdf plugin update ${{ matrix.tool }} "${{ github.head_ref }}"
 
       - name: List all versions of tool
         run: asdf list-all ${{ matrix.tool }}
