@@ -2,13 +2,13 @@ name: Test
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   test:
-    name: 'Test pbs-asdf plugin'
+    name: "Test pbs-asdf plugin"
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -23,7 +23,7 @@ jobs:
         uses: asdf-vm/actions/setup@v1
 
       - name: Install the plugin
-        run: asdf plugin add ${{ matrix.tool }} https://github.com/pbs/asdf-pbs.git
+        run: asdf plugin add ${{ matrix.tool }} https://github.com/pbs/asdf-pbs.git "${{ github.head_ref }}"
 
       - name: List all versions of tool
         run: asdf list-all ${{ matrix.tool }}
