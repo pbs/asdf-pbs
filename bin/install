@@ -17,7 +17,7 @@ readonly toolname="$(basename "$(dirname "${__dirname}")")"
 readonly TMP_DOWNLOAD_DIR="$(mktemp -d -t "asdf_${toolname}_XXXXXX")"
 trap 'rm -rf "${TMP_DOWNLOAD_DIR?}"' EXIT
 
-install () {
+install() {
   local -r version="$1"
   local -r install_path="$2"
 
@@ -42,18 +42,39 @@ install () {
   fi
 }
 
-get_arch () {
+get_platform() {
   uname | tr '[:upper:]' '[:lower:]'
 }
 
-get_filename () {
-  local -r version="$1"
-  local -r platform="$(get_arch)"
-  # The /v is necessary here as a hack for redyl
-  echo "${toolname}-${version/v}-${platform}-amd64"
+get_arch() {
+  arch="$(uname -m | tr '[:upper:]' '[:lower:]')"
+  case "${arch}" in
+  x86_64)
+    echo "amd64"
+    ;;
+  *)
+    echo "${arch}"
+    ;;
+  esac
 }
 
-get_download_url () {
+get_filename() {
+  local -r version="$1"
+  local -r platform="$(get_platform)"
+  local -r arch="$(get_arch)"
+  if [[ "${toolname}" = "redyl" ]]; then
+    echo -n "${toolname}-${version/v/}-${platform}-${arch}"
+  elif [[ "${tool-name}" = "gorson" ]]; then
+    # Naming conventions for filenames changed for gorson after version 11
+    if [[ "${version}" -le 11 ]]; then
+      echo -n "${toolname}-${version/v/}-${platform}-${arch}"
+    else
+      echo -n "${toolname}-${platform}-${arch}"
+    fi
+  fi
+}
+
+get_download_url() {
   local -r version="$1"
   local -r filename="$(get_filename "${version}")"
   echo "https://github.com/pbs/${toolname}/releases/download/${version}/${filename}"
