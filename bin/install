@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # http://redsymbol.net/articles/unofficial-bash-strict-mode/
-set -euxo pipefail
+set -euo pipefail
 IFS=$'\n\t'
 
 # required environment variables
@@ -64,7 +64,7 @@ get_filename() {
   local -r arch="$(get_arch)"
   if [[ "${toolname}" = "redyl" ]]; then
     echo -n "${toolname}-${version/v/}-${platform}-${arch}"
-  elif [[ "${tool-name}" = "gorson" ]]; then
+  elif [[ "${toolname}" = "gorson" ]]; then
     # Naming conventions for filenames changed for gorson after version 11
     if [[ "${version}" -le 11 ]]; then
       echo -n "${toolname}-${version/v/}-${platform}-${arch}"
